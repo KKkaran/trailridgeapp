@@ -33,24 +33,31 @@
                 </div>
                 <div class="calcrent border p-2 m-1">
                     <h2>Fill in Below:</h2>
-                    <input type="number" placeholder="Rent" name="rent" class="rent" required>
-                        <input type="number" placeholder="Utilities" name="tilities" class="utilities" required>
-                        <input type="number" placeholder="Hydro" name="hydro" class="hydro" required>
-                        <input type="number" placeholder="Water" name="water" class="water" required>
-                        <input type="number" placeholder="Gas" name="gas" class="gas" required>
-                    <input type="submit" value="Calculate">
+                    <div>
+                        <form action="" class="calcres">
+                            <input type="number" placeholder="Rent" name="rent" class="rent" required>
+                            <input type="number" placeholder="Utilities" name="tilities" class="utilities" >
+                            <input type="number" placeholder="Hydro" name="hydro" class="hydro" >
+                            <input type="number" placeholder="Water" name="water" class="water" >
+                            <input type="number" placeholder="Gas" name="gas" class="gas" >
+                            <input type="submit" value="Calculate">
+                        </form>
+                    </div>
 
                 </div>
             </div>
             <div class="displayResult">
                 <div>
-                    <h2>Result:</h2>
+                    <h2 class="text-dark text-center">Result:</h2>
+                    <div class="dr">
+
+                    </div>
                 </div>
             </div>
         </div>
         <div class="list-purchases w-md-25 flex-grow-1 order-md-1">
             <div class="purchases text-center">
-                <h2>Purchase-List:</h2>
+                <h2 class="text-dark">Purchase-List:</h2>
                 <div class="showpurchases">
 
                 </div>
