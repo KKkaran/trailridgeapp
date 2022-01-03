@@ -23,6 +23,6 @@ fs.writeFile("./db/members.json", JSON.stringify(Members.getMembers()),er=>{
 console.log(Members.getMembers())
 
 
-app.listen(3001,()=>{
+app.listen(PORT,()=>{
     console.log(`running on ${PORT}`)
 })
