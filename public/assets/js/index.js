@@ -46,6 +46,47 @@ const renderSelect = (list)=>{//will fill the select on reload
         t.html(element.name)
         $(".shopperNames").append(t)
     });
+    //dynamically adding checkboxes to the departments:::
+    let container = $(".addCheck1")
+    list.forEach(element=>{
+
+        $('<input />', { type: 'checkbox', id: element.name+"-rent", value: element.name }).appendTo(container);
+        $('<label />', { 'for': `${element.name}-rent`, text: element.name }).appendTo(container);
+        $("<br>").appendTo(container)
+
+    })
+    let container2 = $(".addCheck2")
+    list.forEach(element=>{
+
+        $('<input />', { type: 'checkbox', id: element.name + "-hydro" , value: element.name }).appendTo(container2);
+        $('<label />', { 'for': `${element.name}-hydro`, text: element.name }).appendTo(container2);
+        $("<br>").appendTo(container2)
+
+    })
+    let container3 = $(".addCheck3")
+    list.forEach(element=>{
+
+        $('<input />', { type: 'checkbox', id: element.name +"-water", value: element.name }).appendTo(container3);
+        $('<label />', { 'for': `${element.name}-water`, text: element.name }).appendTo(container3);
+        $("<br>").appendTo(container3)
+
+    })
+    let container4 = $(".addCheck4")
+    list.forEach(element=>{
+
+        $('<input />', { type: 'checkbox', id: element.name+"-gas", value: element.name }).appendTo(container4);
+        $('<label />', { 'for': `${element.name}-gas`, text: element.name }).appendTo(container4);
+        $("<br>").appendTo(container4)
+
+    })
+    let container5 = $(".addCheck5")
+    list.forEach(element=>{
+
+        $('<input />', { type: 'checkbox', id: element.name+"-common", value: element.name }).appendTo(container5);
+        $('<label />', { 'for': `${element.name}-common`, text: element.name }).appendTo(container5);
+        $("<br>").appendTo(container5)
+
+    })
 }
 const commonCalc = ()=>{
     let netCommon = []
@@ -100,7 +141,19 @@ const commonCalc = ()=>{
     
     
 
+    console.log("checking for checked boxes")
+    const departs = ["-rent","-hydro","-water","-gas","-common"]
+    departs.forEach(d=>{
 
+        members.forEach(m => {
+            //console.log(`${m.name}${d}`)
+            if($(`#${m.name}${d}`).is(":checked")){
+                console.log(`${m.name}${d}`)
+            }
+        });
+
+
+    })
    
     
     
@@ -110,6 +163,7 @@ $(".newpurchase").on("submit",(e)=>{
     e.preventDefault()
     postPurchase().then(getPurchases).then(renderPurchases)
 })
+
 $(".calcres").on("submit", (e)=>{
     e.preventDefault();
     commonCalc()
