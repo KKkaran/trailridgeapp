@@ -107,17 +107,17 @@ const commonCalc = ()=>{
         })
         netCommon.push(person)
     })
-
+    console.log(netCommon)
     let totalCommon = 0;
     netCommon.forEach(r=>{
         totalCommon+=r.total
     })
-    //console.log(totalCommon/members.length)
+    //console.log(totalCommon)
     netCommon.map(r=>{
         r.commonDue = Math.floor(totalCommon/members.length - r.total)
         r.net2pay = Math.floor(r.commonDue + rentPerHead)
     })
-    console.log(netCommon)
+    //console.log(netCommon)
 
     let net2pay = members.map(t=>{
         t.netnet = Math.floor(rentPerHead + totalCommon/members.length)
@@ -129,6 +129,10 @@ const commonCalc = ()=>{
         return t
     });
     console.log(net2pay)
+
+
+
+
     const container = $("<div>").addClass("dr text-center p-2")
     net2pay.forEach(li=>{
         const el1 = $("<div>").addClass(li.id)
@@ -141,22 +145,116 @@ const commonCalc = ()=>{
     
     
 
-    console.log("checking for checked boxes")
-    const departs = ["-rent","-hydro","-water","-gas","-common"]
-    departs.forEach(d=>{
-
-        members.forEach(m => {
-            //console.log(`${m.name}${d}`)
-            if($(`#${m.name}${d}`).is(":checked")){
-                console.log(`${m.name}${d}`)
-            }
-        });
-
-
-    })
+    
    
     
     
+}
+
+const calcRent = (arrayPeople)=>{
+    let rent = []
+    let hydro = []
+    let water = []
+    let gas = []
+    let common = []
+//this will calc rent on the basis of selected members
+    console.log(arrayPeople)
+    arrayPeople.forEach(ap=>{
+        let g = ap.split("-");
+        if(g[1] === "rent") rent.push(g[0])
+        else if(g[1] === "hydro") hydro.push(g[0])
+        else if(g[1] === "water") water.push(g[0])
+        else if(g[1] === "gas") gas.push(g[0])
+        else if(g[1] === "common") common.push(g[0])
+    })
+
+    //now we know who pays for what we can calc who pays what
+    let rentPerHead = $(".rent").val()/rent.length;
+    let hydroPerHead = $(".hydro").val()/hydro.length;
+    let waterPerHead = $(".water").val()/water.length;
+    let gasPerHead = $(".gas").val()/gas.length;
+    
+    
+    members.forEach((m,i)=>{//rent
+        if(rent.includes(m.name)){
+            m.net = rentPerHead
+        }else{
+            m.net = 0
+        }
+    })
+    members.forEach((m,i)=>{//hydro
+        if(hydro.includes(m.name)){
+            m.net += hydroPerHead
+        }else{
+            m.net += 0
+        }
+    })
+    members.forEach((m,i)=>{//gas
+        if(water.includes(m.name)){
+            m.net += waterPerHead
+        }else{
+            m.net += 0
+        }
+    })
+    members.forEach((m,i)=>{//gas
+        if(gas.includes(m.name)){
+            m.net += gasPerHead
+        }else{
+            m.net += 0
+        }
+    })
+
+    let netCommon = []
+    let set = new Set()
+    purchases.forEach(r=>{
+        set.add(r.name)
+    })
+    set.forEach(g=>{
+        const person = {
+            name: g,
+            total:0
+        }
+        purchases.forEach(h=>{
+            if(g === h.name){
+                person.total += parseInt(h.price)
+            }
+        })
+        netCommon.push(person)
+    })
+    let totalCommon = 0;
+    netCommon.forEach(r=>{
+        totalCommon+=r.total
+    })
+    
+    console.log(totalCommon/common.length)
+    let pp = netCommon.map(r=>{
+        r.commonDue = Math.floor(totalCommon/common.length - r.total)
+        //r.net2pay = Math.floor(r.commonDue + rentPerHead)
+    })
+    console.log(netCommon)
+
+
+    members.forEach((m,i)=>{//common
+        if(common.includes(m.name)){
+            m.net += totalCommon/common.length
+        }else{
+            m.net += 0
+        }
+    })
+    //subtract what someone paid in common from them
+   
+    //console.log(members)
+    members.map(t=>{
+        //t.netnet = Math.floor(rentPerHead + totalCommon/members.length)
+        netCommon.forEach(s=>{
+                if(t.name === s.name){
+                    t.net -= s.total   
+                }
+            })
+        
+        }
+    )
+    console.log(members)
 }
 
 $(".newpurchase").on("submit",(e)=>{
@@ -166,7 +264,20 @@ $(".newpurchase").on("submit",(e)=>{
 
 $(".calcres").on("submit", (e)=>{
     e.preventDefault();
-    commonCalc()
+    console.log("checking for checked boxes")
+    const departs = ["-rent","-hydro","-water","-gas","-common"]
+    let arrayPeople = []
+    departs.forEach(d=>{
+
+        members.forEach(m => {
+        //console.log(`${m.name}${d}`)
+        if($(`#${m.name}${d}`).is(":checked")){
+            arrayPeople.push(`${m.name}${d}`)
+            }
+        });
+    })
+    calcRent(arrayPeople);
+    //commonCalc()
 })
 
 
