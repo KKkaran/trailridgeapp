@@ -36,6 +36,7 @@ const renderPurchases = async(list2)=>{//will display the purchases made
         container.append(el1)
     })
     $(".showpurchases").replaceWith(container)
+    $(".newpurchase").trigger("reset")
 
 }
 const renderSelect = (list)=>{//will fill the select on reload
@@ -133,15 +134,7 @@ const commonCalc = ()=>{
 
 
 
-    const container = $("<div>").addClass("dr text-center p-2")
-    net2pay.forEach(li=>{
-        const el1 = $("<div>").addClass(li.id)
-        const el = $("<h4>")
-        el.html(`${li.name} --- ${li.netnet}`)
-        el1.append(el)
-        container.append(el1)
-    })
-    $(".dr").replaceWith(container)
+    
     
     
 
@@ -255,11 +248,23 @@ const calcRent = (arrayPeople)=>{
         }
     )
     console.log(members)
+    const container = $("<div>").addClass("dr text-center p-2")
+    members.forEach(li=>{
+        const el1 = $("<div>").addClass(li.id)
+        const el = $("<h4>")
+        el.html(`${li.name} --- ${li.net}`)
+        el1.append(el)
+        container.append(el1)
+    })
+    $(".dr").replaceWith(container)
+    //$(".tbd").html("")
 }
 
 $(".newpurchase").on("submit",(e)=>{
     e.preventDefault()
     postPurchase().then(getPurchases).then(renderPurchases)
+
+    
 })
 
 $(".calcres").on("submit", (e)=>{

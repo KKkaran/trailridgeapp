@@ -2,13 +2,4 @@ body {
   background-color: teal;
   color: white;
 }
-.list-purchases{
-    border: 2px solid red;
-}
-.operations{
-    border: 2px solid yellow;
-}
-.displayResult{
-    border: 2px solid blue;
-}
 
